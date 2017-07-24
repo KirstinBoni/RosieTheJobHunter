@@ -24,7 +24,7 @@ namespace RosieTheJobHunter
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/yeti.bootstrap.css",
                       "~/Content/site.css"));
         }
     }

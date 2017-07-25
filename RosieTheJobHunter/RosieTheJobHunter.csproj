@@ -227,6 +227,7 @@
     <Content Include="Content\img\circus.png" />
     <Content Include="Content\img\game.png" />
     <Content Include="Content\img\profile.png" />
+    <Content Include="Content\img\rosie.png" />
     <Content Include="Content\img\safe.png" />
     <Content Include="Content\img\submarine.png" />
     <Content Include="Content\yeti.bootstrap.css" />

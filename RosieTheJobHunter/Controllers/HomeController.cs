@@ -26,8 +26,9 @@ namespace RosieTheJobHunter.Controllers
         {
             string resume = ParsePDF();
             string jobListings = await GetJobs();
-            string documents = constructText(jobListings, resume);
-            string response = await extractKeywords(documents);
+            //string documents = constructText(jobListings, resume);
+            //string response = await extractKeywords(documents);
+            List<double> matchCount = CompareAllEntries(resume, jobListings);
             HomeIndexModel model = new HomeIndexModel()
             {
 
@@ -137,18 +138,20 @@ namespace RosieTheJobHunter.Controllers
             }
         }
 
-        public void CompareAllEntries(string jobApplications, string resume)
+        public List<double> CompareAllEntries(string resume, string jobApplications)
         {
             JArray jobListings = JArray.Parse(jobApplications);
+            var resumeSplit = resume.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            List<double> matchCount = new List<double>();
             foreach (var listing in jobListings)
             {
-                var resumeSplit = resume.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                 string description = listing["description"].ToString();
-                int count = description.Split(new char[] { ' ' }).Sum(p => resumeSplit.Contains(p) ? 1 : 0);
-                int total = description.Split(new char[] { ' ' }).Count();
-
-                Console.Write(count);
+                double matches = (double)resumeSplit.Count(x => description.Contains(x));
+                double matched = matches / (double)resumeSplit.Count();
+                matchCount.Add(matched);
             }
+
+            return matchCount;
 
         }
 

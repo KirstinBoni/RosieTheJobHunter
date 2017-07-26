@@ -21,12 +21,12 @@ namespace RosieTheJobHunter.Controllers
     {
         public async Task<ActionResult> Index()
         {
-            string resume = ParsePDF();
-            string jobListings = await GetJobs();
-            string documents = constructText(jobListings, resume);
-            string response = await extractKeywords(documents);
+            //string resume = ParsePDF();
+            //string jobListings = await GetJobs();
+            //string documents = constructText(jobListings, resume);
+            //string response = await extractKeywords(documents);
             //List<double> matchCount = CompareAllEntries(resume, jobListings);
-            CompareKeywords(response);
+            //CompareKeywords(response);
             HomeIndexModel model = new HomeIndexModel()
             {
 
@@ -178,15 +178,6 @@ namespace RosieTheJobHunter.Controllers
                 ViewBag.Message = "File upload failed!!";
                 return View("~/Views/Home/Index.cshtml");
             }
-        }
-
-        [HttpPost]
-        public ActionResult GetData(bool fulltime, string role, string location)
-        {
-            System.Diagnostics.Debug.WriteLine(location);
-            System.Diagnostics.Debug.WriteLine(role);
-            System.Diagnostics.Debug.WriteLine(fulltime);
-            return View("~/Views/Home/Index.cshtml");
         }
     }
 }

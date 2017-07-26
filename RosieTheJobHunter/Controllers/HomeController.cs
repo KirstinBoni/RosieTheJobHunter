@@ -1,22 +1,19 @@
-﻿using RosieTheJobHunter.Models;
+﻿using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.parser;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RosieTheJobHunter.Model;
+using RosieTheJobHunter.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using iTextSharp.text.pdf;
-using iTextSharp.text.pdf.parser;
-using Newtonsoft.Json.Linq;
-using RosieTheJobHunter.Model;
-using Extensions;
-using System.Net.Http.Headers;
-using System.Web.Script.Serialization;
-using Newtonsoft.Json;
-using System.Text.RegularExpressions;
 
 namespace RosieTheJobHunter.Controllers
 {
@@ -67,7 +64,7 @@ namespace RosieTheJobHunter.Controllers
         {
        
             ITextExtractionStrategy its = new iTextSharp.text.pdf.parser.LocationTextExtractionStrategy();
-            using (PdfReader reader = new PdfReader("C:/Users/t-master/Downloads/MESResume.pdf")) 
+            using (PdfReader reader = new PdfReader("C:/Users/t-kiboni/Downloads/KB_Resume.pdf")) 
             {
                 StringBuilder text = new StringBuilder();
 
@@ -155,10 +152,6 @@ namespace RosieTheJobHunter.Controllers
 
         }
 
-        public void CompareEntries(JObject jobApplication, string resume)
-        {
-
-        }
 
         [HttpPost]
         public ActionResult UploadFile(HttpPostedFileBase file)

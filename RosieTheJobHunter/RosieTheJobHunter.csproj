@@ -210,27 +210,27 @@
     <Compile Include="Models\HomeIndexModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Model\Keyword.cs" />
-    <Compile Include="Model\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Util\Constants.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Compile Include="Extensions\JSONHelper.cs" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\freelancer.css" />
     <Content Include="Content\freelancer.min.css" />
+    <Content Include="Content\img\cabin.png" />
+    <Content Include="Content\img\cake.png" />
+    <Content Include="Content\img\circus.png" />
+    <Content Include="Content\img\game.png" />
+    <Content Include="Content\img\profile.png" />
+    <Content Include="Content\img\rosie.png" />
+    <Content Include="Content\img\safe.png" />
+    <Content Include="Content\img\submarine.png" />
     <Content Include="Content\yeti.bootstrap.css" />
     <Content Include="Content\yeti.bootstrap.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -244,8 +244,12 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="Scripts\upload.js" />
+    <Content Include="Views\Home\FileUpload.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\contact_me.js" />
+    <Content Include="Scripts\freelancer.js" />
+    <Content Include="Scripts\freelancer.min.js" />
+    <Content Include="Scripts\jqBootstrapValidation.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -283,12 +287,12 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\Manage\Index.cshtml" />
+    <Content Include="Views\Shared\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Shared\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Shared\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
@@ -296,7 +300,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
-    <Folder Include="UploadedFiles\" />
     <Folder Include="Views\App_LocalResources\" />
   </ItemGroup>
   <ItemGroup>
@@ -309,12 +312,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -22,6 +22,7 @@ namespace RosieTheJobHunter
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/freelancer.js",
+                      "~/Scripts/upload.js",
                       "~/Scripts/contact_me.js",
                       "~/Scripts/respond.js"));
 

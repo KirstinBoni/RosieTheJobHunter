@@ -126,10 +126,6 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                @{
-                    ViewBag.Title = "Upload File";
-                }
-
                 <h2>UploadFile</h2>
 
                 @using (Html.BeginForm("UploadFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))

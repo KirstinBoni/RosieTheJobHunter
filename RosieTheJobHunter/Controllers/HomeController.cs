@@ -67,7 +67,7 @@ namespace RosieTheJobHunter.Controllers
         {
        
             ITextExtractionStrategy its = new iTextSharp.text.pdf.parser.LocationTextExtractionStrategy();
-            using (PdfReader reader = new PdfReader("C:/Users/t-kiboni/Downloads/KB_Resume.pdf")) 
+            using (PdfReader reader = new PdfReader("C:/Users/t-master/Downloads/MESResume.pdf")) 
             {
                 StringBuilder text = new StringBuilder();
 

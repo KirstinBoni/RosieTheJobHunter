@@ -18,117 +18,40 @@
         </div>
     </div>
 </header>
-
-<section id="portfolio">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2>Portfolio</h2>
-                <hr class="star-primary">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4 portfolio-item">
-                <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <i class="fa fa-search-plus fa-3x"></i>
-                        </div>
-                    </div>
-                    <img src="~/Content/img/cabin.png" class="img-responsive" alt="Cabin">
-                </a>
-            </div>
-            <div class="col-sm-4 portfolio-item">
-                <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <i class="fa fa-search-plus fa-3x"></i>
-                        </div>
-                    </div>
-                    <img src="~/Content/img/cake.png" class="img-responsive" alt="Slice of cake">
-                </a>
-            </div>
-            <div class="col-sm-4 portfolio-item">
-                <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <i class="fa fa-search-plus fa-3x"></i>
-                        </div>
-                    </div>
-                    <img src="~/Content/img/circus.png" class="img-responsive" alt="Circus tent">
-                </a>
-            </div>
-            <div class="col-sm-4 portfolio-item">
-                <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <i class="fa fa-search-plus fa-3x"></i>
-                        </div>
-                    </div>
-                    <img src="~/Content/img/game.png" class="img-responsive" alt="Game controller">
-                </a>
-            </div>
-            <div class="col-sm-4 portfolio-item">
-                <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <i class="fa fa-search-plus fa-3x"></i>
-                        </div>
-                    </div>
-                    <img src="~/Content/img/safe.png" class="img-responsive" alt="Safe">
-                </a>
-            </div>
-            <div class="col-sm-4 portfolio-item">
-                <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <i class="fa fa-search-plus fa-3x"></i>
-                        </div>
-                    </div>
-                    <img src="~/Content/img/submarine.png" class="img-responsive" alt="Submarine">
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
 <!-- About Section -->
-<section class="success" id="about">
+<section id="about">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2>About</h2>
-                <hr class="star-light">
+                <hr class="star-primary">
             </div>
         </div>
         <div class="row">
             <div class="col-lg-4 col-lg-offset-2">
-                <p>Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
+                <p>"All three of these barriers, which together account for 78% of women’s reasons for not applying, have to do with believing that the job qualifications are real requirements, and seeing the hiring process as more by-the-book and true to the on paper guidelines than it really is."</p>
+                <p><a href="https://hbr.org/2014/08/why-women-dont-apply-for-jobs-unless-theyre-100-qualified#comment-section">Tara Sophia Mohr - Harvard Buisness Review</a></p>
             </div>
             <div class="col-lg-4">
-                <p>Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
-            </div>
-            <div class="col-lg-8 col-lg-offset-2 text-center">
-                <a href="#" class="btn btn-lg btn-outline">
-                    <i class="fa fa-download"></i> Download Theme
-                </a>
+                <p>We believe that text requirements shouldn't be the barrier for women to apply to tech jobs, and we aim to mitigate that problem by providing a way for women to get the jobs they can apply to even if they don't meet all the paper "requirements."</p>
             </div>
         </div>
     </div>
 </section>
 <!-- Contact Section -->
-<section id="contact">
+<section class="success" id="hunt">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2>Start Hunting</h2>
-                <hr class="star-primary">
+                <hr class="star-light">
             </div>
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h2>Select your your preferences</h2>
+                <h2>Select your preferences</h2>
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    <button class="btn  dropdown-toggle" type="button" data-toggle="dropdown">
                         Full time?
                         <span class="caret"></span>
                     </button>
@@ -149,7 +72,7 @@
                     <textarea class="form-control" id="exampleTextarea" rows="1"></textarea>
                 </div>
                 <br />
-                <h2>Or Upload a File</h2>
+                <h2>Or Upload Your Resume</h2>
 
                 @using (Html.BeginForm("UploadFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
@@ -162,11 +85,8 @@
                         @ViewBag.Message
 
                     </div>
-
-
                 }  
             </div>
         </div>
     </div>
-    
 </section>

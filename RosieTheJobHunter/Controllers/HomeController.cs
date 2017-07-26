@@ -21,12 +21,15 @@ namespace RosieTheJobHunter.Controllers
     {
         public async Task<ActionResult> Index()
         {
-            //string resume = ParsePDF();
-            //string jobListings = await GetJobs();
+            string resume = ParsePDF();
+            Dictionary<string, string> qualifications = new Dictionary<string, string>();
+            qualifications.Add("Role", "");
+            qualifications.Add("Location", "");
+            qualifications.Add("Fulltime", "");
+            string jobListings = await GetJobs(qualifications);
             //string documents = constructText(jobListings, resume);
             //string response = await extractKeywords(documents);
-            //List<double> matchCount = CompareAllEntries(resume, jobListings);
-            //CompareKeywords(response);
+            List<double> matchCount = CompareAllEntries(resume, jobListings);
             HomeIndexModel model = new HomeIndexModel()
             {
 
@@ -34,7 +37,7 @@ namespace RosieTheJobHunter.Controllers
             return View();
         }
 
-        public async Task<string> GetJobs()
+        public async Task<string> GetJobs(Dictionary<string, string> qualifications)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -55,8 +58,9 @@ namespace RosieTheJobHunter.Controllers
                 }
 
                 HttpResponseMessage response = await client.GetAsync(uri.ToString());
-
+                
                 string responseContent = await response.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine(responseContent);
                 return responseContent;
             }
         }
@@ -65,7 +69,7 @@ namespace RosieTheJobHunter.Controllers
         {
        
             ITextExtractionStrategy its = new iTextSharp.text.pdf.parser.LocationTextExtractionStrategy();
-            using (PdfReader reader = new PdfReader("C:/Users/t-kiboni/Downloads/KB_Resume.pdf")) 
+            using (PdfReader reader = new PdfReader("C:/Users/t-master/Downloads/MESResume.pdf")) 
             {
                 StringBuilder text = new StringBuilder();
 
@@ -153,11 +157,6 @@ namespace RosieTheJobHunter.Controllers
 
         }
 
-        public void CompareKeywords(string response)
-        {
-            List<Response> responses = JsonConvert.DeserializeObject<List<Response>>(response);
-        }
-
 
         [HttpPost]
         public ActionResult UploadFile(HttpPostedFileBase file)
@@ -178,6 +177,17 @@ namespace RosieTheJobHunter.Controllers
                 ViewBag.Message = "File upload failed!!";
                 return View("~/Views/Home/Index.cshtml");
             }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> GetData(bool fulltime, string role, string location)
+        {
+            Dictionary<string, string> qualifications = new Dictionary<string, string>();
+            qualifications.Add("Role", role);
+            qualifications.Add("Location", location);
+            qualifications.Add("Fulltime", fulltime.ToString());
+            await GetJobs(qualifications);
+            return View("~/Views/Home/Index.cshtml");
         }
     }
 }

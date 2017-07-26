@@ -67,23 +67,23 @@ namespace RosieTheJobHunter.Controllers
 
         public string ParsePDF()
         {
-       
-            ITextExtractionStrategy its = new iTextSharp.text.pdf.parser.LocationTextExtractionStrategy();
-            using (PdfReader reader = new PdfReader("C:/Users/t-master/Downloads/MESResume.pdf")) 
-            {
-                StringBuilder text = new StringBuilder();
+            /*
+         ITextExtractionStrategy its = new iTextSharp.text.pdf.parser.LocationTextExtractionStrategy();
+         using (PdfReader reader = new PdfReader("~/Content/MESResume.pdf")) 
+         {
+             StringBuilder text = new StringBuilder();
 
-                for (int i = 1; i <= reader.NumberOfPages; i++)
-                {
-                    string thePage = PdfTextExtractor.GetTextFromPage(reader, i, its);
-                    string[] theLines = thePage.Split('\n');
-                    foreach (var theLine in theLines)
-                    {
-                        text.AppendLine(theLine);
-                    }
-                }
-                return text.ToString();
-            }
+             for (int i = 1; i <= reader.NumberOfPages; i++)
+             {
+                 string thePage = PdfTextExtractor.GetTextFromPage(reader, i, its);
+                 string[] theLines = thePage.Split('\n');
+                 foreach (var theLine in theLines)
+                 {
+                     text.AppendLine(theLine);
+                 }
+             }*/
+            return "hello";//text.ToString();
+            //}
         }
 
         public string constructText(string jobApplications, string resume)

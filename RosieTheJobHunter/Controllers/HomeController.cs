@@ -179,5 +179,14 @@ namespace RosieTheJobHunter.Controllers
                 return View("~/Views/Home/Index.cshtml");
             }
         }
+
+        [HttpPost]
+        public ActionResult GetData(bool fulltime, string role, string location)
+        {
+            System.Diagnostics.Debug.WriteLine(location);
+            System.Diagnostics.Debug.WriteLine(role);
+            System.Diagnostics.Debug.WriteLine(fulltime);
+            return View("~/Views/Home/Index.cshtml");
+        }
     }
 }

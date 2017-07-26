@@ -11,6 +11,12 @@ using System.Web.Mvc;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
 using Newtonsoft.Json.Linq;
+using RosieTheJobHunter.Model;
+using Extensions;
+using System.Net.Http.Headers;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace RosieTheJobHunter.Controllers
 {
@@ -20,6 +26,8 @@ namespace RosieTheJobHunter.Controllers
         {
             string resume = ParsePDF();
             string jobListings = await GetJobs();
+            string documents = constructText(jobListings, resume);
+            string response = await extractKeywords(documents);
             HomeIndexModel model = new HomeIndexModel()
             {
 
@@ -75,27 +83,76 @@ namespace RosieTheJobHunter.Controllers
             }
         }
 
-        public decimal CompareAllEntries(string jobApplications, string resume)
+        public string constructText(string jobApplications, string resume)
         {
-            JObject jobListings = JObject.Parse(jobApplications);
+            string newText = Regex.Replace(resume, @"\t|\n|\r", "");
+            var doc= new List<Keyword>();
+            doc.Add(
+                        new Keyword { id = "1", text = newText }
+                    );
+
+            JArray jobListings = JArray.Parse(jobApplications);
+            int counter = 2;
             foreach (var listing in jobListings)
             {
                 var resumeSplit = resume.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                var description = listing['description'];
-                var res1 = (from string part in
-                            select new
-                            {
-                                list = part,
-                                count = part.Split(new char[] { ' ' }).Sum(p => s.Contains(p) ? 1 : 0)
+                string description = listing["description"].ToString();
+                newText = Regex.Replace(description, @"\t|\n|\r", "");
+                if (description.Equals(null))
+                {
+                    description = String.Empty;
+                }
+                doc.Add(
+                          new Keyword { id = counter.ToString(), text = newText }
+                        );
 
-                            }).OrderByDescending(p => p.count).First();
+                counter++;
+            }
 
-                Console.Write(res1.count);
+            dynamic collectionWrapper = new
+            {
+                documents = doc
+            };
+
+            return JsonConvert.SerializeObject(collectionWrapper);
+            
+        }
+
+        public async Task<string> extractKeywords(string request)
+        {
+            using(HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "b5a6c8f9ac314016af467cec31dd118c");
+                var queryString = HttpUtility.ParseQueryString(string.Empty);
+                var uri = "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases?" + queryString;
+                HttpResponseMessage response;
+                byte[] byteData = Encoding.UTF8.GetBytes(request);
+
+                using (var content = new ByteArrayContent(byteData))
+                {
+                    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    response = await client.PostAsync("https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases?", content);
+                }
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
+
+        public void CompareAllEntries(string jobApplications, string resume)
+        {
+            JArray jobListings = JArray.Parse(jobApplications);
+            foreach (var listing in jobListings)
+            {
+                var resumeSplit = resume.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                string description = listing["description"].ToString();
+                int count = description.Split(new char[] { ' ' }).Sum(p => resumeSplit.Contains(p) ? 1 : 0);
+                int total = description.Split(new char[] { ' ' }).Count();
+
+                Console.Write(count);
             }
 
         }
 
-        public decimal CompareEntries(JObject jobApplication, string resume)
+        public void CompareEntries(JObject jobApplication, string resume)
         {
 
         }
@@ -107,8 +164,8 @@ namespace RosieTheJobHunter.Controllers
             {
                 if (file.ContentLength > 0)
                 {
-                    string _FileName = Path.GetFileName(file.FileName);
-                    string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
+                    string _FileName = System.IO.Path.GetFileName(file.FileName);
+                    string _path = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
                     file.SaveAs(_path);
                 }
                 ViewBag.Message = "File Uploaded Successfully!!";

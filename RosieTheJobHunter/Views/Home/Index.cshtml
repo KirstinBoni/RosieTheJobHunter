@@ -126,7 +126,30 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h2>UploadFile</h2>
+                <h2>Select your your preferences</h2>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        Full time?
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Yes</a></li>
+                        <li><a href="#">No</a></li>
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label for="exampleSelect2">Role:</label>
+                    <select multiple class="form-control" id="exampleSelect2">
+                        <option>Software Engineer</option>
+                        <option>Program Manager</option>
+                        <option>Manager</option>
+                        <option>Researcher</option>
+                    </select>
+                    <label for="exampleTextarea">Location (Ex. New York City, NY)</label>
+                    <textarea class="form-control" id="exampleTextarea" rows="1"></textarea>
+                </div>
+                <br />
+                <h2>Or Upload a File</h2>
 
                 @using (Html.BeginForm("UploadFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {

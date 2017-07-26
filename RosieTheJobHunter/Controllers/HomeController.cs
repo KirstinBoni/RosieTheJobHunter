@@ -1,6 +1,7 @@
 ﻿using RosieTheJobHunter.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -99,11 +100,25 @@ namespace RosieTheJobHunter.Controllers
 
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult UploadFile(HttpPostedFileBase file)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            try
+            {
+                if (file.ContentLength > 0)
+                {
+                    string _FileName = Path.GetFileName(file.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
+                    file.SaveAs(_path);
+                }
+                ViewBag.Message = "File Uploaded Successfully!!";
+                return View("~/Views/Home/Index.cshtml");
+            }
+            catch
+            {
+                ViewBag.Message = "File upload failed!!";
+                return View("~/Views/Home/Index.cshtml");
+            }
         }
     }
 }

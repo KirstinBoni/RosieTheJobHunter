@@ -50,43 +50,36 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <h2>Select your preferences</h2>
-                <div class="dropdown">
-                    <button class="btn  dropdown-toggle" type="button" data-toggle="dropdown">
-                        Full time?
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Yes</a></li>
-                        <li><a href="#">No</a></li>
-                    </ul>
-                </div>
-                <div class="form-group">
-                    <label for="exampleSelect2">Role:</label>
-                    <select multiple class="form-control" id="exampleSelect2">
-                        <option>Software Engineer</option>
-                        <option>Program Manager</option>
-                        <option>Manager</option>
-                        <option>Researcher</option>
-                    </select>
-                    <label for="exampleTextarea">Location (Ex. New York City, NY)</label>
-                    <textarea class="form-control" id="exampleTextarea" rows="1"></textarea>
-                </div>
-                <br />
-                <h2>Or Upload Your Resume</h2>
+            @using (Html.BeginForm("GetData", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.TextBox("location", "Location (Ex. New York City, NY)", new { maxlength = 50, size = 10, @class = "inputbox form-control"})<br />
+                @Html.DropDownList("role", new List<SelectListItem>
 
-                @using (Html.BeginForm("UploadFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
+                 {
+                    new SelectListItem{ Text="Software Engineer", Value = "Software Engineer" },
+                    new SelectListItem{ Text="Manager", Value = "Manager" },
+                    new SelectListItem{ Text="Researcher", Value = "Researcher" },
+                    new SelectListItem{ Text="Program Manager", Value = "Program Manager" }
+                 }, new { @class = "inputbox form-control" })
+                <label for="fulltime">Fulltime? </label>@Html.CheckBox("fulltime", false, new { @class = "form-check" })<br />
+                <input type="submit" value="Submit" class="submit btn" />
+            }
+                    <br />
+                    <h2>Or Upload Your Resume</h2>
 
-                    <div>
-                        @Html.TextBox("file", "", new { type = "file" }) <br />
+                    @using (Html.BeginForm("UploadFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
 
-                        <input type="submit" value="Upload" />
+                        <div>
+                            @Html.TextBox("file", "", new {  @class= "fileupload-new", @type = "file" }) <br />
 
-                        @ViewBag.Message
+                            <input type="submit" value="Upload" class="submit btn" />
 
-                    </div>
-                }  
-            </div>
+                            @ViewBag.Message
+
+                        </div>
+                    }
+</div>
         </div>
     </div>
 </section>

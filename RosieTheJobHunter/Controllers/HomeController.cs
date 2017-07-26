@@ -23,9 +23,10 @@ namespace RosieTheJobHunter.Controllers
         {
             string resume = ParsePDF();
             string jobListings = await GetJobs();
-            //string documents = constructText(jobListings, resume);
-            //string response = await extractKeywords(documents);
-            List<double> matchCount = CompareAllEntries(resume, jobListings);
+            string documents = constructText(jobListings, resume);
+            string response = await extractKeywords(documents);
+            //List<double> matchCount = CompareAllEntries(resume, jobListings);
+            CompareKeywords(response);
             HomeIndexModel model = new HomeIndexModel()
             {
 
@@ -150,6 +151,11 @@ namespace RosieTheJobHunter.Controllers
 
             return matchCount;
 
+        }
+
+        public void CompareKeywords(string response)
+        {
+            List<Response> responses = JsonConvert.DeserializeObject<List<Response>>(response);
         }
 
 

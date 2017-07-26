@@ -6,6 +6,6 @@ namespace RosieTheJobHunter.Model
     public class Response
     {
         public string id { get; set; }
-        public string keyPhrases { get; set; }
+        public IList<string> keyPhrases { get; set; }
     }
 }

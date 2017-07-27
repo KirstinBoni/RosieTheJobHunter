@@ -121,7 +121,7 @@ namespace RosieTheJobHunter.Controllers
             
         }
 
-        public async Task<List<String>> extractKeywords(string request)
+        public async Task<Dictionary<String, List<String>>> extractKeywords(string request)
         {
             using(HttpClient client = new HttpClient())
             {
@@ -140,9 +140,9 @@ namespace RosieTheJobHunter.Controllers
             }
         }
 
-        public List<String> parseIt(string jsonString)
+        public Dictionary<String, List<String>> parseIt(string jsonString)
         {
-            List<String> keyWords = new List<String>();
+            Dictionary<String, List<String>> mapper = new Dictionary<String, List<String>>();
             JObject obj = new JObject();
 
             obj = JObject.Parse(jsonString);
@@ -154,13 +154,16 @@ namespace RosieTheJobHunter.Controllers
             for (int i = 0; i < array.Count; i++)
             {
                 JArray subArray = (JArray)array[i]["keyPhrases"];
+                String id = (String)array[i]["id"];
+                List<String> keyWords = new List<String>();
 
                 for (int j = 0; j < subArray.Count; j++)
                 {
                     keyWords.Add(subArray[j].ToString());
                 }
+                mapper.Add(id, keyWords);
             }
-            return keyWords;
+            return mapper;
         }
 
         public List<double> CompareAllEntries(string resume, string jobApplications)

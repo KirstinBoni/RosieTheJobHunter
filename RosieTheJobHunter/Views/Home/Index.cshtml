@@ -48,12 +48,27 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>Select files...</span>
+                <!-- The file input field used as target for the file upload widget -->
+                <input id="fileupload" type="file" name="files[]" multiple>
+            </span>
+            <br>
+            <br>
+            <!-- The global progress bar -->
+            <div id="progress" class="progress">
+                <div class="progress-bar progress-bar-success"></div>
+            </div>
+            <!-- The container for the uploaded files -->
+            <div id="files" class="files"></div>
+            <br>
                 <h2>Select your preferences</h2>
-            @using (Html.BeginForm("GetData", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("GetData", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                @Html.TextBox("location", "Location (Ex. New York City, NY)", new { maxlength = 50, size = 10, @class = "inputbox form-control"})<br />
-                @Html.DropDownList("role", new List<SelectListItem>
+                    @Html.TextBox("location", "Location (Ex. New York City, NY)", new { maxlength = 50, size = 10, @class = "inputbox form-control" })<br />
+                    @Html.DropDownList("role", new List<SelectListItem>
 
                  {
                     new SelectListItem{ Text="Software Engineer", Value = "Software Engineer" },
@@ -61,25 +76,53 @@
                     new SelectListItem{ Text="Researcher", Value = "Researcher" },
                     new SelectListItem{ Text="Program Manager", Value = "Program Manager" }
                  }, new { @class = "inputbox form-control" })
-                <label for="fulltime">Fulltime? </label>@Html.CheckBox("fulltime", false, new { @class = "form-check" })<br />
-                <input type="submit" value="Submit" class="submit btn" />
-            }
-                    <br />
-                    <h2>Or Upload Your Resume</h2>
+                    <label for="fulltime">Fulltime? </label>@Html.CheckBox("fulltime", false, new { @class = "form-check" })<br />
+                    <input type="submit" value="Submit" class="submit btn" />
+                }
+                <br />
+                <h2>Or Upload Your Resume</h2>
 
-                    @using (Html.BeginForm("UploadFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
+                @using (Html.BeginForm("UploadFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
 
-                        <div>
-                            @Html.TextBox("file", "", new {  @class= "fileupload-new", @type = "file" }) <br />
+                    <div>
+                        @Html.TextBox("file", "", new { @class = "fileupload-new", @type = "file" }) <br />
 
-                            <input type="submit" value="Upload" class="submit btn" />
+                        <input type="submit" value="Upload" class="submit btn" />
 
-                            @ViewBag.Message
+                        @ViewBag.Message
 
-                        </div>
-                    }
+                    </div>
+                }
             </div>
+
         </div>
     </div>
 </section>
+<script>
+/*jslint unparam: true */
+/*global window, $ */
+$(function () {
+    'use strict';
+    // Change this to the location of your server-side upload handler:
+    var url = window.location.hostname === 'blueimp.github.io' ?
+                '//jquery-file-upload.appspot.com/' : 'server/php/';
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo('#files');
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
+</script>

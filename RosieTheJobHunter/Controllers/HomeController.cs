@@ -121,7 +121,7 @@ namespace RosieTheJobHunter.Controllers
             
         }
 
-        public async Task<string> extractKeywords(string request)
+        public async Task<List<String>> extractKeywords(string request)
         {
             using(HttpClient client = new HttpClient())
             {
@@ -136,8 +136,31 @@ namespace RosieTheJobHunter.Controllers
                     content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     response = await client.PostAsync("https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases?", content);
                 }
-                return await response.Content.ReadAsStringAsync();
+                return parseIt(await response.Content.ReadAsStringAsync());
             }
+        }
+
+        public List<String> parseIt(string jsonString)
+        {
+            List<String> keyWords = new List<String>();
+            JObject obj = new JObject();
+
+            obj = JObject.Parse(jsonString);
+
+            JToken docMember = obj["documents"];
+
+            JArray array = (JArray)docMember;
+
+            for (int i = 0; i < array.Count; i++)
+            {
+                JArray subArray = (JArray)array[i]["keyPhrases"];
+
+                for (int j = 0; j < subArray.Count; j++)
+                {
+                    keyWords.Add(subArray[j].ToString());
+                }
+            }
+            return keyWords;
         }
 
         public List<double> CompareAllEntries(string resume, string jobApplications)
